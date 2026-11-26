@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars -- delete this line when you start writing the code */
 // Step 4: NewsStory - the card of one story.
 import styles from './NewsStory.module.css'
+import defaultImage from '../../assets/default-news.svg';
 
 /**
  * @param {object} props
@@ -12,5 +13,21 @@ import styles from './NewsStory.module.css'
 export default function NewsStory({ author, title, urlToImage, onClick }) {
   // TODO: a card (styles.card) with an <img>, the title and the author
   // TODO: clicking the card calls onClick
-  return null
+
+  return (
+    <article className={styles.card} onClick={onClick}>
+      <img
+        src={urlToImage || defaultImage}
+        alt={title}
+        className={styles.image}
+        onError={(e) => {
+          e.currentTarget.src = defaultImage;
+        }}
+      />
+      <div className={styles.content}>
+        <h3 className={styles.title}>{title}</h3>
+        <p className={styles.author}>{author || 'Unknown Author'}</p>
+      </div>
+    </article>
+  );
 }

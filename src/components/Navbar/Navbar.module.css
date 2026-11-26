@@ -1,1 +1,35 @@
 /* Styles of Navbar - design it here */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f0f7ff;
+  border-bottom: 1px solid #d0e3ff;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color: #1e3a8a;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #fefce8;
+}

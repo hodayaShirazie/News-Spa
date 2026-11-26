@@ -2,6 +2,41 @@
 import { afterEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 
+const store = new Map();
+const localStorageMock = new Proxy(
+  {
+    getItem: (key) => (store.has(String(key)) ? store.get(String(key)) : null),
+    setItem: (key, value) => {
+      store.set(String(key), String(value));
+    },
+    removeItem: (key) => {
+      store.delete(String(key));
+    },
+    clear: () => {
+      store.clear();
+    },
+    key: (index) => Array.from(store.keys())[index] ?? null,
+    get length() {
+      return store.size;
+    },
+  },
+  {
+    ownKeys: () => Array.from(store.keys()),
+    getOwnPropertyDescriptor: (target, prop) => {
+      if (store.has(String(prop))) {
+        return { enumerable: true, configurable: true, value: store.get(String(prop)) };
+      }
+      return Reflect.getOwnPropertyDescriptor(target, prop);
+    },
+  }
+);
+
+Object.defineProperty(globalThis, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+  configurable: true,
+});
+
 // Tells React that the tests wrap updates in act() (React Testing Library does it for us).
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
